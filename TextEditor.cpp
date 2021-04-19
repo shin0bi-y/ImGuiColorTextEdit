@@ -1,3 +1,4 @@
+#include <iostream>
 #include <algorithm>
 #include <chrono>
 #include <string>
@@ -2007,7 +2008,7 @@ const TextEditor::Palette & TextEditor::GetDarkPalette()
 {
 	const static Palette p = { {
 			0xff7f7f7f,	// Default
-			0xffd69c56,	// Keyword	
+			0xffd69c56,	// Keyword
 			0xff00ff00,	// Number
 			0xff7070e0,	// String
 			0xff70a0e0, // Char literal
@@ -2035,7 +2036,7 @@ const TextEditor::Palette & TextEditor::GetLightPalette()
 {
 	const static Palette p = { {
 			0xff7f7f7f,	// None
-			0xffff0c06,	// Keyword	
+			0xffff0c06,	// Keyword
 			0xff008000,	// Number
 			0xff2020a0,	// String
 			0xff304070, // Char literal
@@ -2063,7 +2064,7 @@ const TextEditor::Palette & TextEditor::GetRetroBluePalette()
 {
 	const static Palette p = { {
 			0xff00ffff,	// None
-			0xffffff00,	// Keyword	
+			0xffffff00,	// Keyword
 			0xff00ff00,	// Number
 			0xff808000,	// String
 			0xff808000, // Char literal
@@ -3166,7 +3167,7 @@ const TextEditor::LanguageDefinition& TextEditor::LanguageDefinition::Silice()
     if (!inited)
     {
         static const char* const keywords[] = {
-                "algorithm", "output", "input", "if", "else", "while", "autorun", "auto", "onehot", "brom", "bram", "dualport_bram", "case", "circuitry", "switch", "default", "break", "always", "__display", "__write", "__signed", "__unsigned", "bitfield", "interface"
+                "algorithm", "output", "input", "if", "end", "else", "while", "autorun", "auto", "onehot", "brom", "bram", "dualport_bram", "case", "circuitry", "switch", "default", "break", "always", "__display", "__write", "__signed", "__unsigned", "bitfield", "interface"
         };
 
         for (auto& k : keywords)
@@ -3193,6 +3194,7 @@ const TextEditor::LanguageDefinition& TextEditor::LanguageDefinition::Silice()
         }
          */
 
+        langDef.mTokenRegexStrings.push_back(std::make_pair<std::string, PaletteIndex>("(\\$\\$if|then|\\$\\$else|\\$\\$for|\\$\\$while|\\$\\$end)\b|\b(do)\b|\\$include|\\$\\$dofile", PaletteIndex::Preprocessor));
         langDef.mTokenRegexStrings.push_back(std::make_pair<std::string, PaletteIndex>("L?\\\"(\\\\.|[^\\\"])*\\\"", PaletteIndex::String));
         langDef.mTokenRegexStrings.push_back(std::make_pair<std::string, PaletteIndex>("\\\'[^\\\']*\\\'", PaletteIndex::String));
         langDef.mTokenRegexStrings.push_back(std::make_pair<std::string, PaletteIndex>("0[xX][0-9a-fA-F]+[uU]?[lL]?[lL]?", PaletteIndex::Number));
